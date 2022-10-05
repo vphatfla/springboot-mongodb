@@ -1,21 +1,19 @@
 package com.example.mdb.spring.boot.model;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.UUID;
 
 @Document("groceryitems")
 public class GroceryItem {
 
-    @Id
-    private String id;
+    private Long id = UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE;
 
     private String name;
     private int quantity;
     private String category;
-
-    public GroceryItem(String id, String name, int quantity, String category){
+    public GroceryItem(String name, int quantity, String category){
         super();
-        this.id = id;
         this.name = name;
         this.quantity = quantity;
         this.category = category;
@@ -29,7 +27,7 @@ public class GroceryItem {
         this.name = name;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -38,18 +36,18 @@ public class GroceryItem {
     }
 
     public int getQuantity() {
-        return quantity;
+        return this.quantity;
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public String getCategory() {
-        return category;
+        return this.category;
     }
 
-    public String getId() {
-        return id;
+    public Long getId() {
+        return this.id;
     }
 }

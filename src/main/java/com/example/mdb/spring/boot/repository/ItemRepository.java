@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.repository.Query;
 
 import java.util.List;
 
-public interface ItemRepository extends MongoRepository<GroceryItem, String> {
+public interface ItemRepository extends MongoRepository<GroceryItem, Long> {
 
     @Query("{name:'?0'}")
     GroceryItem findItemByName(String name);

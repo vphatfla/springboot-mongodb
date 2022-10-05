@@ -28,7 +28,9 @@ public class MdbSpringBootApplication  implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-
+        System.out.println("START RUN");
+        System.out.println("Delete all old storage");
+        itemsDeleteAll();
         System.out.println("-------------CREATE GROCERY ITEMS-------------------------------\n");
 
         createGroceryItems();
@@ -36,7 +38,7 @@ public class MdbSpringBootApplication  implements CommandLineRunner {
         System.out.println("\n----------------SHOW ALL GROCERY ITEMS---------------------------\n");
 
         showAllGroceryItems();
-
+/*
         System.out.println("\n--------------GET ITEM BY NAME-----------------------------------\n");
 
         getGroceryItemByName("Whole Wheat Biscuit");
@@ -51,7 +53,7 @@ public class MdbSpringBootApplication  implements CommandLineRunner {
 
         System.out.println("\n----------DELETE A GROCERY ITEM----------------------------------\n");
 
-        deleteGroceryItem("Kodo Millet");
+        //deleteGroceryItem("Kodo Millet");
 
         System.out.println("\n------------FINAL COUNT OF GROCERY ITEMS-------------------------\n");
 
@@ -61,17 +63,18 @@ public class MdbSpringBootApplication  implements CommandLineRunner {
 
         System.out.println("\n-----------UPDATE QUANTITY OF A GROCERY ITEM------------------------\n");
 
-        updateItemQuantity("Bonny Cheese Crackers Plain", 121);
+        updateItemQuantity("Bonny Cheese Crackers Plain", 121); */
+        System.out.println("RUN");
     }
 
     public void createGroceryItems()
     {
         System.out.println("Data creation started...");
-        groceryItemRepo.save(new GroceryItem("Whole Wheat Biscuit", "Whole Wheat Biscuit", 5, "snacks"));
-        groceryItemRepo.save(new GroceryItem("Kodo Millet", "XYZ Kodo Millet healthy", 2, "millets"));
-        groceryItemRepo.save(new GroceryItem("Dried Red Chilli", "Dried Whole Red Chilli", 2, "spices"));
-        groceryItemRepo.save(new GroceryItem("Pearl Millet", "Healthy Pearl Millet", 1, "millets"));
-        groceryItemRepo.save(new GroceryItem("Cheese Crackers", "Bonny Cheese Crackers Plain", 6, "snacks"));
+        groceryItemRepo.save(new GroceryItem( "Whole Wheat Biscuit", 5, "snacks"));
+        groceryItemRepo.save(new GroceryItem( "XYZ Kodo Millet healthy", 2, "millets"));
+        groceryItemRepo.save(new GroceryItem( "Dried Whole Red Chilli", 2, "spices"));
+        groceryItemRepo.save(new GroceryItem( "Healthy Pearl Millet", 1, "millets"));
+        groceryItemRepo.save(new GroceryItem( "Bonny Cheese Crackers Plain", 6, "snacks"));
         System.out.println("Data creation complete");
 
     }
@@ -133,7 +136,7 @@ public class MdbSpringBootApplication  implements CommandLineRunner {
     }
 
     // delete
-    public void deleteGroceryItem(String id)
+    public void deleteGroceryItem(Long id)
     {
         groceryItemRepo.deleteById(id);
         System.out.println("item with id " + id + " has been deleted");
@@ -144,5 +147,11 @@ public class MdbSpringBootApplication  implements CommandLineRunner {
     {
         System.out.println("Updating quantity for " + name);
         customRepo.updateItemQuantity(name, newQuantity);
+    }
+
+    public void itemsDeleteAll()
+    {
+        groceryItemRepo.deleteAll();
+
     }
 }
