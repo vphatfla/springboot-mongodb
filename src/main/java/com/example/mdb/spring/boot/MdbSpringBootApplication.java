@@ -29,7 +29,7 @@ public class MdbSpringBootApplication  implements CommandLineRunner {
     @Override
     public void run(String... args) {
         System.out.println("START RUN");
-        System.out.println("Delete all old storage");
+        /*System.out.println("Delete all old storage");
         itemsDeleteAll();
         System.out.println("-------------CREATE GROCERY ITEMS-------------------------------\n");
 
