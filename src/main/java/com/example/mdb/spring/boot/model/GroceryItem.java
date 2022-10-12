@@ -1,5 +1,6 @@
 package com.example.mdb.spring.boot.model;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.UUID;
@@ -7,7 +8,7 @@ import java.util.UUID;
 @Document("groceryitems")
 public class GroceryItem {
 
-    private Long id = UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE;
+    private ObjectId id = new ObjectId();
 
     private String name;
     private int quantity;
@@ -27,9 +28,7 @@ public class GroceryItem {
         this.name = name;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
@@ -47,7 +46,11 @@ public class GroceryItem {
         return this.category;
     }
 
-    public Long getId() {
+    public ObjectId getId() {
         return this.id;
+    }
+
+    public void setId(ObjectId id) {
+        this.id = id;
     }
 }

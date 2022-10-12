@@ -1,12 +1,13 @@
 package com.example.mdb.spring.boot.repository;
 
 import com.example.mdb.spring.boot.model.GroceryItem;
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
 import java.util.List;
 
-public interface ItemRepository extends MongoRepository<GroceryItem, Long> {
+public interface ItemRepository extends MongoRepository<GroceryItem, ObjectId> {
 
     @Query("{name:'?0'}")
     GroceryItem findItemByName(String name);

@@ -3,6 +3,7 @@ package com.example.mdb.spring.boot.Controller;
 import com.example.mdb.spring.boot.Assembler.ItemAssembler;
 import com.example.mdb.spring.boot.model.GroceryItem;
 import com.example.mdb.spring.boot.repository.ItemRepository;
+import org.bson.types.ObjectId;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class ItemController {
 
@@ -25,10 +27,11 @@ public class ItemController {
         this.assembler = assembler;
     }
 
-    @GetMapping("")
+    /*@GetMapping("")
     String emptyPage() {
         return "NOTHING HERE, GO /ITEMS";
-    }
+    } */
+
 
     @GetMapping("/items")
     public CollectionModel<EntityModel<GroceryItem>> all()
@@ -42,7 +45,7 @@ public class ItemController {
     }
 
     @GetMapping("/items/{id}")
-    public EntityModel<GroceryItem> one(@PathVariable Long id)
+    public EntityModel<GroceryItem> one(@PathVariable ObjectId id)
     {
         GroceryItem item = itemRepo.findById(id)
                 .orElseThrow();
@@ -61,7 +64,7 @@ public class ItemController {
     }
 
     @PutMapping("items/{id}")
-    ResponseEntity<?> updatingItem(@RequestBody GroceryItem updatingItem, @PathVariable Long id )
+    ResponseEntity<?> updatingItem(@RequestBody GroceryItem updatingItem, @PathVariable ObjectId id )
     {
         GroceryItem matchingItem = itemRepo.findById(id)
                 .map(item -> {
@@ -79,7 +82,7 @@ public class ItemController {
     }
 
     @DeleteMapping("items/{id}")
-    ResponseEntity<?> deletingItem(@PathVariable Long id)
+    ResponseEntity<?> deletingItem(@PathVariable ObjectId id)
     {
         itemRepo.deleteById(id);
         return ResponseEntity.noContent().build();

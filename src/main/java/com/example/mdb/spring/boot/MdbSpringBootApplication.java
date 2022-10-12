@@ -3,10 +3,14 @@ package com.example.mdb.spring.boot;
 import com.example.mdb.spring.boot.model.GroceryItem;
 import com.example.mdb.spring.boot.repository.CustomeItemrepository;
 import com.example.mdb.spring.boot.repository.ItemRepository;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 import java.util.List;
@@ -15,6 +19,11 @@ import java.util.List;
 @EnableMongoRepositories
 public class MdbSpringBootApplication  implements CommandLineRunner {
 
+    @Bean
+    public Jackson2ObjectMapperBuilderCustomizer customizer()
+    {
+        return builder -> builder.serializerByType(ObjectId.class,new ToStringSerializer());
+    }
     @Autowired
     ItemRepository groceryItemRepo;
 
@@ -29,8 +38,9 @@ public class MdbSpringBootApplication  implements CommandLineRunner {
     @Override
     public void run(String... args) {
         System.out.println("START RUN");
-        /*System.out.println("Delete all old storage");
+        System.out.println("Delete all old storage");
         itemsDeleteAll();
+
         System.out.println("-------------CREATE GROCERY ITEMS-------------------------------\n");
 
         createGroceryItems();
@@ -38,6 +48,7 @@ public class MdbSpringBootApplication  implements CommandLineRunner {
         System.out.println("\n----------------SHOW ALL GROCERY ITEMS---------------------------\n");
 
         showAllGroceryItems();
+        /*
 /*
         System.out.println("\n--------------GET ITEM BY NAME-----------------------------------\n");
 
@@ -136,7 +147,7 @@ public class MdbSpringBootApplication  implements CommandLineRunner {
     }
 
     // delete
-    public void deleteGroceryItem(Long id)
+    public void deleteGroceryItem(ObjectId id)
     {
         groceryItemRepo.deleteById(id);
         System.out.println("item with id " + id + " has been deleted");
